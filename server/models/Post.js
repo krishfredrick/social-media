@@ -22,8 +22,12 @@ const PostSchema = mongoose.Schema({
     of: Boolean,
   },
   // looking forward future update
+  // comments:{
+  //   type:Map,
+  //   of:[],
+  // }
   comments:{
-    type:Array,
+    type: Array,
     default:[]
   }
 

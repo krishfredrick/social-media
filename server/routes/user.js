@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/:id', verifyToken, getUsers);
 router.get('/:id/follower', verifyToken, getUserFollower);
-router.patch('/id/:follwerId', verifyToken, addRemoveFollower)
+router.patch('/id/:followerId', verifyToken, addRemoveFollower)
 
 
 export default router;

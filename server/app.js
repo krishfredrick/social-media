@@ -15,9 +15,9 @@ import {fileURLToPath} from 'url';
  import userRoutes from './routes/user.js';
  import postRoutes from './routes/post.js';
  import { verifyToken } from './middleware/auth.js';
- import User from './models/User.js';
- import Post from './models/Post.js';
- import {users, posts} from './Data/index.js'
+//  import User from './models/User.js';
+//  import Post from './models/Post.js';
+//  import {users, posts} from './Data/index.js'
  
 
 
@@ -31,15 +31,14 @@ app.use(express.urlencoded({limit:"30mb", extended: true}));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
 app.use(morgan('common'));
-app.use(express);
-app.use(cors);
-app.use('asserts', express.static(path.join(__dirname, 'public/asserts')));
+app.use(cors());
+app.use('assets', express.static(path.join(__dirname, 'public/assets')));
 
 
 /** FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'public/asserts');
+    cb(null, 'public/assets');
   },
   filename: function(req, file, cb){
     cb(null, file.originalname);
@@ -53,9 +52,9 @@ const upload = multer({storage});
 app.post('/auth/register', upload.single('picture'), register);
 app.post('/posts'/verifyToken,upload.single('picture'), createPost )
 
-app.use('./auth', authRoutes);
-app.use('./users', userRoutes);
-app.use('./posts', postRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/posts', postRoutes);
 
 /** MONGODB CONNECTION */
 const port = process.env.PORT || 4050;

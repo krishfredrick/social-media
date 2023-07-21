@@ -13,8 +13,8 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Dropzone from "react-dropzone";
-import FlexBetween from "components/FlexBetween";
 import { setLogin } from "@/redux-store";
+import FlexBetween from "@/components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -47,6 +47,19 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
+  // const [initialValuesRegister, setInitialValuesRegister] = useState( {
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   password: "",
+  //   location: "",
+  //   occupation: "",
+  //   picture: "",
+  // });
+  // const [initialValuesLogin, setInitialValuesLogin]  = useState({
+  //   email: "",
+  //   password: "",
+  // })
   const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -78,28 +91,39 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:4000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-      navigate("/home");
+    try {
+      
+      const loggedInResponse = await fetch("http://localhost:4000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const loggedIn = await loggedInResponse.json();
+      onSubmitProps.resetForm();
+      if (loggedIn) { 
+        console.log("user",loggedIn);
+        console.log("token",loggedIn.token);
+        dispatch(
+          setLogin({
+            user: loggedIn.user,
+            token: loggedIn.token,
+          })
+        );
+        navigate("/home");
+      }
+    } catch (error) {
+      navigate('/');
     }
+    navigate("/home");
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
+    console.log(" hello ")
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
+
+ 
 
   return (
     <Formik
@@ -116,7 +140,11 @@ const Form = () => {
         handleSubmit,
         setFieldValue,
         resetForm,
-      }) => (
+      }) => { 
+        console.log(values.lastName)
+        console.log(values.password);
+        console.log(values.email);
+        return(
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
@@ -127,6 +155,7 @@ const Form = () => {
             }}
           >
             {isRegister && (
+              
               <>
                 <TextField
                   label="First Name"
@@ -140,6 +169,7 @@ const Form = () => {
                   helperText={touched.firstName && errors.firstName}
                   sx={{ gridColumn: "span 2" }}
                 />
+              
                 <TextField
                   label="Last Name"
                   onBlur={handleBlur}
@@ -150,6 +180,7 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
+              
                 <TextField
                   label="Location"
                   onBlur={handleBlur}
@@ -160,6 +191,7 @@ const Form = () => {
                   helperText={touched.location && errors.location}
                   sx={{ gridColumn: "span 4" }}
                 />
+                
                 <TextField
                   label="Occupation"
                   onBlur={handleBlur}
@@ -210,10 +242,10 @@ const Form = () => {
 
             <TextField
               label="Email"
+              name="email"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
-              name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
@@ -266,7 +298,7 @@ const Form = () => {
             </Typography>
           </Box>
         </form>
-      )}
+      )}}
     </Formik>
   );
 };

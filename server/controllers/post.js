@@ -64,7 +64,53 @@ const likePost = async(req, res)=>{
     res.status(404).json({message: error.message});
   }
 }
+const addComment = async(res, req)=>{
+  try {
+    const { id } = req.params;
+    const {userId, comment} = req.body;
+    const post = await Post.findById(id);
+    const iscommented = post.comments.has(userId);
+    if(iscommented){
+      post.comments.get(userId).push(comment);
+    }else{
+      post.comments.set(userId, comment);
+    }
+    const getComment = await Post.findByIdAndUpdate(id, {comment: post.comments}, {new: true});
+    const allComments = [];
+    for(let arr of getComment.comments){
+      allComments.push(arr);
+    }
+    allComments = allComments.flat(Infinity);
+    res.status(200).json(allComments);
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+}
+
+
+const deleteComment = async(res, req)=>{
+  try {
+    const { id } = req.params;
+    const {userId, comment} = req.body;
+    const post = await Post.findById(id);
+    const iscommented = post.comments.get(userId);
+    if(iscommented.length == 1){
+      post.comments.remove(userId)
+    }else{
+      post.comments.set(userId, iscommented.filter((cmt)=> cmt!==comment));
+    }
+    const getComment = await Post.findByIdAndUpdate(id, {comment: post.comments}, {new: true});
+    const allComments = [];
+    for(let arr of getComment.comments){
+      allComments.push(arr);
+    }
+    allComments = allComments.flat(Infinity);
+    res.status(200).json(allComments);
+  } catch (error) {
+    res.status(404).json({message: error.message});
+  }
+}
 
 export {
-  likePost,getUserPosts,getFeedPosts,createPost
+  likePost,getUserPosts,getFeedPosts,createPost,addComment,deleteComment
 }

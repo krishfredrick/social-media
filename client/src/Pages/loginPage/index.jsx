@@ -1,5 +1,6 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
+import Form from "./Form";
 
 function LoginPage() {
   const theme = useTheme();
@@ -25,8 +26,9 @@ function LoginPage() {
         <Typography
           fontWeight="500" variant="h5" sx={{mb: "1.5rem"}}
         >
-          Welcome to Zukku!!! 🤗 Your personnal Hangout Place
+          Welcome to Zukku!!! 🤗 Your personal Hangout Place
         </Typography>
+        <Form />
       </Box>
     </Box>
   );
