@@ -14,7 +14,7 @@ const FollowerListWidget = ({ userId }) => {
 
   const getfollowers = async () => {
     const response = await fetch(
-      `http://localhost:4000/users/${userId}/followers`,
+      `http://localhost:4000/users/${userId}/follower`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

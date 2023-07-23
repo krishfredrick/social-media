@@ -9,7 +9,7 @@ import { verifyToken } from '../middleware/auth.js'
 const router = express.Router();
 
 router.get('/:id', verifyToken, getUsers);
-router.get('/:id/follower', verifyToken, getUserFollower);
+router.get('/:id/followers', verifyToken, getUserFollower);
 router.patch('/id/:followerId', verifyToken, addRemoveFollower)
 
 

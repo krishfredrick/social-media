@@ -6,12 +6,13 @@ const getUsers = async (req,res)=>{
     const user = await User.findById(id);
     res.status(200).json(user);
   } catch (error) {
+    console.log("error in getUser")
     res.status(404).json({message: error.message})
   }
 }
 
 
-const getUserFollower = async()=>{
+const getUserFollower = async(req, res)=>{
   try {
     const {id} = req.params;
     const user = await User.findById(id);
@@ -21,8 +22,10 @@ const getUserFollower = async()=>{
     console.log(followers);
     
     const collection_of_followers = followers.map((follower)=>({...follower}))
+    console.log(followers);
     res.status(200).json(collection_of_followers);
   } catch (error) {
+    console.log("error in getUser follower")
     res.status(404).json({message: error.message});
   }
 }

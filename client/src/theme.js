@@ -1,3 +1,4 @@
+// color design tokens export
 export const colorTokens = {
   grey: {
     0: "#FFFFFF",
@@ -28,12 +29,14 @@ export const colorTokens = {
   },
 };
 
+// mui theme settings
 export const themeSettings = (mode) => {
   return {
     palette: {
       mode: mode,
-      ...(mode == "dark"
+      ...(mode === "dark"
         ? {
+            // palette values for dark mode
             primary: {
               dark: colorTokens.primary[200],
               main: colorTokens.primary[500],
@@ -52,6 +55,7 @@ export const themeSettings = (mode) => {
             },
           }
         : {
+            // palette values for light mode
             primary: {
               dark: colorTokens.primary[700],
               main: colorTokens.primary[500],
@@ -68,8 +72,7 @@ export const themeSettings = (mode) => {
               default: colorTokens.grey[10],
               alt: colorTokens.grey[0],
             },
-          }
-        ),
+          }),
     },
     typography: {
       fontFamily: ["Rubik", "sans-serif"].join(","),

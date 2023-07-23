@@ -1,8 +1,6 @@
 import Post from "../models/Post.js"
 import User from "../models/User.js"
 
-
-
 const createPost = async(req, res)=>{
   try {
     const {userId,description, picturePath } = req.body;
@@ -61,10 +59,11 @@ const likePost = async(req, res)=>{
 
     res.status(200).json(updatedPost);
   } catch (error) {
+    console.log("er", error, {error: message})
     res.status(404).json({message: error.message});
   }
 }
-const addComment = async(res, req)=>{
+const addComment = async(req, res)=>{
   try {
     const { id } = req.params;
     const {userId, comment} = req.body;
@@ -88,7 +87,7 @@ const addComment = async(res, req)=>{
 }
 
 
-const deleteComment = async(res, req)=>{
+const deleteComment = async(req, res)=>{
   try {
     const { id } = req.params;
     const {userId, comment} = req.body;

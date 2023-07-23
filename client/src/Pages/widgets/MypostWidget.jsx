@@ -36,7 +36,7 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
-console.log(picturePath,"path");
+
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", _id);
@@ -130,8 +130,8 @@ console.log(picturePath,"path");
             Image
           </Typography>
         </FlexBetween>
-{/* There is edit here */}
-        {!isNonMobileScreens ? (
+
+        {isNonMobileScreens ? (
           <>
             <FlexBetween gap="0.25rem">
               <GifBoxOutlined sx={{ color: mediumMain }} />

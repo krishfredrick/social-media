@@ -43,7 +43,7 @@ const login = async (req, res)=>{
     const{ email, password} = req.body;
     const user = await User.findOne({email: email});
     if(!user){
-      
+      console.log("user not exists")
       return res.status(400).json({msg: "user not exists"});
     }
 

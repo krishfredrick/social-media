@@ -15,9 +15,9 @@ import {fileURLToPath} from 'url';
  import userRoutes from './routes/user.js';
  import postRoutes from './routes/post.js';
  import { verifyToken } from './middleware/auth.js';
-//  import User from './models/User.js';
-//  import Post from './models/Post.js';
-//  import {users, posts} from './Data/index.js'
+ import User from './models/User.js';
+ import Post from './models/Post.js';
+ import {users, posts} from './Data/index.js'
  
 
 
@@ -26,13 +26,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
-app.use(express.json({limit:"30mb"}));
+app.use(express.json({limit:"30mb", extended: true}));
 app.use(express.urlencoded({limit:"30mb", extended: true}));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
 app.use(morgan('common'));
 app.use(cors());
-app.use('assets', express.static(path.join(__dirname, 'public/assets')));
+// app.use(express.static("public"))
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 
 /** FILE STORAGE */
@@ -50,7 +51,7 @@ const upload = multer({storage});
 /** ROUTES WITH FILES */
 
 app.post('/auth/register', upload.single('picture'), register);
-app.post('/posts'/verifyToken,upload.single('picture'), createPost )
+app.post('/posts',verifyToken,upload.single('picture'), createPost )
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -64,7 +65,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 }).then(()=>{
   app.listen(port, ()=>console.log(`http://localhost:${port}/`));
-  // User.in
+  //  for getting dummy inputs -> please use it for one call to populate data in your database and Make sure to uncomment  the import above
   // User.insertMany(users);
   // Post.insertMany(posts);
 }).catch((error)=>console.log(`${error} did not connect` ));

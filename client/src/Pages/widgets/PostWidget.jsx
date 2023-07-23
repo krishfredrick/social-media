@@ -27,8 +27,9 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  const isLiked = Boolean(likes[loggedInUserId]);
+  const isLiked =  Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+  console.log(isLiked, likeCount)
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -44,6 +45,7 @@ const PostWidget = ({
       body: JSON.stringify({ userId: loggedInUserId }),
     });
     const updatedPost = await response.json();
+    // console.log(updatedPost);
     dispatch(setPost({ post: updatedPost }));
   };
 

@@ -47,19 +47,7 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
-  // const [initialValuesRegister, setInitialValuesRegister] = useState( {
-  //   firstName: "",
-  //   lastName: "",
-  //   email: "",
-  //   password: "",
-  //   location: "",
-  //   occupation: "",
-  //   picture: "",
-  // });
-  // const [initialValuesLogin, setInitialValuesLogin]  = useState({
-  //   email: "",
-  //   password: "",
-  // })
+
   const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -91,8 +79,6 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    try {
-      
       const loggedInResponse = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -100,9 +86,10 @@ const Form = () => {
       });
       const loggedIn = await loggedInResponse.json();
       onSubmitProps.resetForm();
+      // console.log(loggedIn);
       if (loggedIn) { 
-        console.log("user",loggedIn);
-        console.log("token",loggedIn.token);
+        // console.log("user",loggedIn);
+        // console.log("token",loggedIn.token);
         dispatch(
           setLogin({
             user: loggedIn.user,
@@ -111,14 +98,11 @@ const Form = () => {
         );
         navigate("/home");
       }
-    } catch (error) {
-      navigate('/');
-    }
-    navigate("/home");
+   
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    console.log(" hello ")
+    // console.log(" hello ")
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
@@ -141,7 +125,7 @@ const Form = () => {
         setFieldValue,
         resetForm,
       }) => { 
-        console.log(values.lastName)
+        // console.log(values.lastName)
         console.log(values.password);
         console.log(values.email);
         return(

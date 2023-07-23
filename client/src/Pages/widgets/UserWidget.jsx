@@ -35,7 +35,7 @@ const UserWidget = ({userId, picturePath})=>{
   useEffect(()=>{
     getUser();
   },[])
-  console.log(user)
+  // console.log(user)
   if(!user) return null;
 
   const {
@@ -56,7 +56,7 @@ const UserWidget = ({userId, picturePath})=>{
         pb="1.1rem"
         onClick={() => navigate(`/profile/${userId}`)}
       >
-        Why i'm ghost
+      
         <FlexBetween gap="1rem">
           <UserImage image={picturePath} />
           <Box>

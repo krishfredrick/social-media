@@ -19,13 +19,12 @@ const Follower = ({ followerId, name, subtitle, userPicturePath }) => {
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-
+  console.log(followers);
   const isfollower = followers.find((follower) => follower._id === followerId);
   console.log(followerId, "id");
-
   const patchfollower = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${followerId}`,
+      `http://localhost:4000/users/${_id}/${followerId}`,
       {
         method: "PATCH",
         headers: {

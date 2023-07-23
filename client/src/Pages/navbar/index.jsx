@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -21,7 +21,7 @@ import {
   Close,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { setMode } from "@/redux-store";
+import { setLogout, setMode } from "@/redux-store";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "@/components/FlexBetween";
 
@@ -29,10 +29,11 @@ function Navbar() {
   const [isMobileMenuToggle, setIsMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user) || {
-    firstName: "rohit",
-    lastName: "sharma",
-  };
+  const user = useSelector((state) => state.user)
+  //  || {
+  //   firstName: "rohit",
+  //   lastName: "sharma",
+  // };
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
@@ -43,6 +44,18 @@ function Navbar() {
   const alt = theme.palette.background.alt;
   const { firstName, lastName } = user;
   const fullName = `${firstName} ${lastName}`;
+  
+  const handleLogOut = ()=>{
+    dispatch(setLogout);
+    navigate('/');
+  }
+
+  useEffect(() => {
+    if(!user && user.firstName != "rohit"){
+      navigate("/")
+    }
+  }, [user])
+
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -185,7 +198,7 @@ function Navbar() {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
+                <MenuItem onClick={handleLogOut}>
                   Log Out
                 </MenuItem>
               </Select>
