@@ -11,7 +11,7 @@ import UserWidget from '../widgets/UserWidget';
 function HomePage() {
   const isNonMobileScreens = useMediaQuery(`(min-width:1000px)`);
   const { _id, picturePath } = useSelector((state)=>state.user);
-  console.log(picturePath);
+  // console.log(picturePath);
   return (
     <Box>
       <Navbar />
@@ -26,7 +26,7 @@ function HomePage() {
         <Box flexBasis={isNonMobileScreens? "26%": undefined}
          mt={isNonMobileScreens? undefined: "2rem"}
         >
-          Hello please recognise me
+          {/* Hello please recognise me */}
           <UserWidget userId={_id} picturePath={picturePath}  />
         </Box>
         <Box flexBasis={isNonMobileScreens? "26%": undefined}
