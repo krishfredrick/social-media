@@ -45,11 +45,16 @@ function Navbar() {
   const { firstName, lastName } = user;
   const fullName = `${firstName} ${lastName}`;
   
-  const handleLogout = ()=>{
-    console.log("in handleLogout",user);
+  const handleLogOut = ()=>{
     dispatch(setLogout);
     navigate('/');
   }
+
+  useEffect(() => {
+    if(!user && user.firstName != "rohit"){
+      navigate("/")
+    }
+  }, [user])
 
 
   return (
@@ -118,7 +123,7 @@ function Navbar() {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(handleLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>

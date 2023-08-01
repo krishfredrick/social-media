@@ -87,8 +87,8 @@ const Form = () => {
       const loggedIn = await loggedInResponse.json();
       onSubmitProps.resetForm();
       // console.log(loggedIn);
-      if (loggedIn.msg !== 'user not exists') { 
-        console.log("user",loggedIn);
+      if (loggedIn) { 
+        // console.log("user",loggedIn);
         // console.log("token",loggedIn.token);
         dispatch(
           setLogin({
