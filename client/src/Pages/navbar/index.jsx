@@ -30,10 +30,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user)
-  //  || {
-  //   firstName: "rohit",
-  //   lastName: "sharma",
-  // };
+  
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
@@ -45,16 +42,11 @@ function Navbar() {
   const { firstName, lastName } = user;
   const fullName = `${firstName} ${lastName}`;
   
-  const handleLogOut = ()=>{
-    dispatch(setLogout);
+  const  handleLogout= ()=>{
+    console.log(" logout is called");
     navigate('/');
+    dispatch(setLogout());
   }
-
-  useEffect(() => {
-    if(!user && user.firstName != "rohit"){
-      navigate("/")
-    }
-  }, [user])
 
 
   return (
@@ -123,7 +115,7 @@ function Navbar() {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -198,7 +190,7 @@ function Navbar() {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleLogOut}>
+                <MenuItem onClick={handleLogout}>
                   Log Out
                 </MenuItem>
               </Select>

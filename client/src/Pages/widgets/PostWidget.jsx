@@ -29,13 +29,17 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked =  Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-  console.log(isLiked, likeCount)
+  const [like_count, setlike_count] = useState(likeCount);
+  const [beenliked, setbeenliked] = useState(isLiked);
+  // console.log(isLiked, likeCount)
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
   const patchLike = async () => {
+    setbeenliked(prev=> !prev);
+    setlike_count(prev=> beenliked? prev-1: prev+1);
     const response = await fetch(`http://localhost:4000/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
@@ -73,13 +77,13 @@ const PostWidget = ({
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
-              {isLiked ? (
+              {beenliked ? (
                 <FavoriteOutlined sx={{ color: primary }} />
               ) : (
                 <FavoriteBorderOutlined />
               )}
             </IconButton>
-            <Typography>{likeCount}</Typography>
+            <Typography>{like_count}</Typography>
           </FlexBetween>
 
           <FlexBetween gap="0.3rem">

@@ -87,9 +87,8 @@ const Form = () => {
       const loggedIn = await loggedInResponse.json();
       onSubmitProps.resetForm();
       // console.log(loggedIn);
-      if (loggedIn) { 
+      if (!loggedIn.msg) { 
         // console.log("user",loggedIn);
-        // console.log("token",loggedIn.token);
         dispatch(
           setLogin({
             user: loggedIn.user,
@@ -127,7 +126,7 @@ const Form = () => {
       }) => { 
         // console.log(values.lastName)
         console.log(values.password);
-        console.log(values.email);
+        // console.log(values.email);
         return(
         <form onSubmit={handleSubmit}>
           <Box

@@ -27,7 +27,8 @@ const createPost = async(req, res)=>{
 
 const getFeedPosts = async(req, res)=>{
   try {
-    const post = await Post.find();
+    const post = await Post.find()
+    // .sort({'createdAt': 'desc'});
     res.status(200).json(post);
   } catch (error) {
     res.status(404).json({message: error.message});
